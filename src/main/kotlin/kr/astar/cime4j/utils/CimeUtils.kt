@@ -2,11 +2,9 @@ package kr.astar.cime4j.utils
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import kr.astar.cime4j.data.message.CimeMessage
-import kr.astar.cime4j.data.message.Extra
-import kr.astar.cime4j.data.message.MessageAttributes
-import kr.astar.cime4j.data.message.User
-import kr.astar.cime4j.data.message.UserAttributes
+import kr.astar.cime4j.Cime
+import kr.astar.cime4j.auth.Auth
+import kr.astar.cime4j.data.message.*
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -14,14 +12,14 @@ import java.net.http.HttpResponse
 import java.util.*
 
 object CimeUtils {
-    fun generateToken(streamerID: String): String? {
+    fun Cime.generateToken(streamerID: String): String? {
         val url = URI.create("https://ci.me/api/app/channels/${streamerID}/chat-token")
-        val json = url.postRequest() ?: return null
+        val json = url.postRequest(this.getAuth()) ?: return null
         val token = json["token"].asString
         return token
     }
 
-    fun URI.postRequest(): JsonObject? {
+    fun URI.postRequest(auth: Auth?): JsonObject? {
         val request= HttpRequest.newBuilder()
             .uri(this).POST(HttpRequest.BodyPublishers.ofString(""))
             .header("Accept", "application/json, text/plain, */*").build()
@@ -29,25 +27,37 @@ object CimeUtils {
         return request(request)
     }
 
-    fun URI.getRequest(): JsonObject? {
+    fun URI.getRequest(auth: Auth?): JsonObject? {
         val request= HttpRequest.newBuilder()
             .uri(this).GET()
-            .header("Accept", "application/json, text/plain, */*").build()
+            .setHeader("Accept", "application/json, text/plain, */*")
 
-        return request(request)
+        if (auth?.type=="cookie") request.setHeader("Cookie", auth.getAuth())
+
+        return request(request.build())
     }
 
     private fun request(request: HttpRequest): JsonObject? {
+
         val client = HttpClient.newHttpClient()
 
         try {
             val response = client.send(
                 request, HttpResponse.BodyHandlers.ofString()
             )
+
+            if (response.statusCode()==400) {
+                println(response?.body())
+            }
+
             if (response.statusCode() == 200) {
                 val body = response?.body() ?: return null
+
+                println(body)
+
                 val json = Gson().fromJson(body, JsonObject::class.java)
                 val data = json.get("data")?.asJsonObject ?: json
+
                 return data
             } else {
                 return null

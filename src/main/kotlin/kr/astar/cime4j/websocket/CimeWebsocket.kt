@@ -31,7 +31,7 @@ class CimeWebsocket : WebSocketListener {
         val request = Request.Builder()
             .url("wss://edge.ivschat.ap-northeast-2.amazonaws.com/")
             .header("Sec-WebSocket-Protocol",
-                generateToken(this.cime.getID())/*.also {
+                this.cime.generateToken(this.cime.getID())/*.also {
                     println("Token Generated: ${it}")
                 }*/ ?: error("유효하지 않은 스트리머 아이디")
             ).build()

@@ -6,7 +6,7 @@ data class CimeMessage(
     val type: String, // EVENT, MESSAGE
     val id: String,
     val requestId: UUID,
-    val eventName: String?, // DONATION_CHAT, DONATION_MISSION_REWARD_ADDED
+    val eventName: String?, // DONATION_CHAT, DONATION_MISSION_REWARD_ADDED, MIDROLL_START
 
     val attributes: MessageAttributes,
 

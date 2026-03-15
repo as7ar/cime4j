@@ -16,20 +16,29 @@ class Cime(private val builder: CimeBuilder) {
     }
 
     fun getID() = this.id
+    fun getAuth() = this.builder.auth
 
     fun fetchChatMode() {
         val uri = URI.create("https://ci.me/api/app/channels/${this.id}/chat-mode")
-        val response = uri.getRequest()
+        val response = uri.getRequest(getAuth())
     }
 
     fun fetchLiveInfo(): LiveInfo? {
-        val uri = URI.create("https://ci.me/api/app/channels/${this.id}/live/viewer?isWatchingUhd=false")
-        val response = uri.getRequest() ?: return null
-        return Gson().fromJson(response, LiveInfo::class.java)
+        try {
+            val uri = URI.create("https://ci.me/api/app/channels/${this.id}/live/viewer?isWatchingUhd=false")
+            val response = uri.getRequest(getAuth()) ?: return null
+
+            println(response)
+
+            return Gson().fromJson(response, LiveInfo::class.java)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return null
+        }
     }
 
     fun fetchMission() {
         val uri= URI.create("https://ci.me/api/app/channels/${this.id}/active-missions")
-        val response = uri.getRequest()
+        val response = uri.getRequest(getAuth())
     }
 }

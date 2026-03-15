@@ -1,6 +1,12 @@
-import kr.astar.cime4j.Cime
 import kr.astar.cime4j.CimeBuilder
+import kr.astar.cime4j.auth.CimeCookie
 
 fun main() {
-    CimeBuilder().setID("miraihanavi").build()
+    val cime= CimeBuilder().setID("irocloud")
+        .setAuth(CimeCookie(
+            $$"Cookie"
+        ))
+        .build()
+
+    println("viewer: ${cime.fetchLiveInfo()?.viewerCount}")
 }
