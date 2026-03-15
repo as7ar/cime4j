@@ -1,13 +1,39 @@
 package kr.astar.cime4j
 
 import com.google.gson.Gson
+import kr.astar.cime4j.cime.CimeChannel
 import kr.astar.cime4j.data.channel.LiveInfo
+import kr.astar.cime4j.utils.CimeUtils
 import kr.astar.cime4j.utils.CimeUtils.getRequest
 import kr.astar.cime4j.websocket.CimeWebsocket
 import java.net.URI
 
-
 class Cime(private val builder: CimeBuilder) {
+
+    companion object {
+        @JvmStatic
+        fun isActive(id: String) = fetchChannel(id)?.isLive ?: false
+
+        @JvmStatic
+        fun fetchChannel(id: String): CimeChannel? {
+            val uri= CimeUtils.fetchJsonLive(id) ?: return null
+            val channel=uri["live"]?.asJsonObject["channel"]?.asJsonObject ?: return null
+
+            val cimeChannel = CimeChannel(
+                channel["id"]?.asInt ?: return null,
+                channel["slug"]?.asString ?: return null,
+                channel["name"]?.asString ?: return null,
+                channel["description"]?.asString ?: return null,
+                channel["followerCount"]?.asInt ?: return null,
+                channel["subscriberCount"]?.asInt ?: return null,
+                channel["isLive"]?.asBoolean ?: return null,
+                channel["level"]?.asInt ?: return null
+            )
+
+            return cimeChannel
+        }
+    }
+
     private var  id: String = this.builder.id ?: error("")
     private var debug: Boolean = this.builder.debug
 
@@ -28,7 +54,7 @@ class Cime(private val builder: CimeBuilder) {
             val uri = URI.create("https://ci.me/api/app/channels/${this.id}/live/viewer?isWatchingUhd=false")
             val response = uri.getRequest(getAuth()) ?: return null
 
-            println(response)
+//            println(response)
 
             return Gson().fromJson(response, LiveInfo::class.java)
         } catch (e: Exception) {
@@ -37,8 +63,14 @@ class Cime(private val builder: CimeBuilder) {
         }
     }
 
-    fun fetchMission() {
+    fun fetchActiveMission() {
         val uri= URI.create("https://ci.me/api/app/channels/${this.id}/active-missions")
+        //https://ci.me/api/app/channels/{id}/missions/{mission-id}
+        val response = uri.getRequest(getAuth())
+    }
+
+    fun fetchMission(missionId: Int) {
+        val uri = URI.create("https://ci.me/api/app/channels/${this.id}/missions/${missionId}")
         val response = uri.getRequest(getAuth())
     }
 }

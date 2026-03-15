@@ -141,4 +141,13 @@ object CimeUtils {
             return null
         }
     }
+
+    internal fun fetchJsonLive(id: String): JsonObject? {
+        val uri = URI.create("https://ci.me/json/@${id}/live")
+        val request= HttpRequest.newBuilder()
+            .uri(uri).GET()
+            .setHeader("Accept", "application/json, text/plain, */*")
+            .build()
+        return request(request)
+    }
 }
