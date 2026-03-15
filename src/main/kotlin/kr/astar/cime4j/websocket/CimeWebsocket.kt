@@ -66,6 +66,7 @@ class CimeWebsocket : WebSocketListener {
                     EventName.DONATION_MISSION_REWARD_ADDED -> {}
                     EventName.MIDROLL_START -> {}
                     EventName.DONATION_MISSION_UPDATED -> {}
+                    EventName.SUBSCRIPTION_MESSAGE -> {}
                     null, EventName.EMPTY -> {}
                 }
             }

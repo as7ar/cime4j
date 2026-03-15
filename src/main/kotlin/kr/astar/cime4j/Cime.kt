@@ -13,11 +13,11 @@ class Cime(private val builder: CimeBuilder) {
 
     companion object {
         @JvmStatic
-        fun isActive(id: String) = fetchChannel(id)?.isLive ?: false
+        fun isActive(id: String) = Cime.fetchChannel(id)?.isLive ?: false
 
         @JvmStatic
         fun fetchChannel(id: String): CimeChannel? {
-            val uri= CimeUtils.fetchJsonLive(id) ?: return null
+            val uri= CimeUtils.fetchJsonLive(id)?.asJsonObject["bodyData"]?.asJsonObject ?: return null
             val channel=uri["live"]?.asJsonObject["channel"]?.asJsonObject ?: return null
 
             val cimeChannel = CimeChannel(

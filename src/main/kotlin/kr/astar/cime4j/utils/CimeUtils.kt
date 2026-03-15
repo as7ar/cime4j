@@ -6,6 +6,7 @@ import kr.astar.cime4j.Cime
 import kr.astar.cime4j.auth.Auth
 import kr.astar.cime4j.data.message.*
 import kr.astar.cime4j.enums.EventName
+import kr.astar.cime4j.exception.MustBeAuthWithCookie
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -49,6 +50,7 @@ object CimeUtils {
 
             if (response.statusCode()==400) {
                 println(response?.body())
+                throw MustBeAuthWithCookie()
             }
 
             if (response.statusCode() == 200) {
@@ -59,6 +61,7 @@ object CimeUtils {
                 val json = Gson().fromJson(body, JsonObject::class.java)
                 val data = json.get("data")?.asJsonObject ?: json
 
+//                println(data)
                 return data
             } else {
                 return null
@@ -147,6 +150,7 @@ object CimeUtils {
             .uri(uri).GET()
             .setHeader("Accept", "application/json, text/plain, */*")
             .build()
+
         return request(request)
     }
 }
