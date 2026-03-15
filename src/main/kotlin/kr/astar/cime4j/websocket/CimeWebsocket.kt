@@ -2,6 +2,10 @@ package kr.astar.cime4j.websocket
 
 import com.google.gson.Gson
 import kr.astar.cime4j.Cime
+import kr.astar.cime4j.enums.DonationType
+import kr.astar.cime4j.enums.EventName
+import kr.astar.cime4j.event.ChatEvent
+import kr.astar.cime4j.event.ConnectionEvent
 import kr.astar.cime4j.utils.CimeUtils.generateMessage
 import kr.astar.cime4j.utils.CimeUtils.generateToken
 import okhttp3.*
@@ -39,7 +43,7 @@ class CimeWebsocket : WebSocketListener {
     }
 
     override fun onOpen(webSocket: WebSocket, response: Response) {
-
+        cime.emit(ConnectionEvent(this.cime.getID()))
     }
 
     override fun onMessage(webSocket: WebSocket, text: String) {
@@ -47,7 +51,23 @@ class CimeWebsocket : WebSocketListener {
         try {
             val cimeMessage = generateMessage(text) ?: return
 
-            println(cimeMessage)
+            if (cimeMessage.type=="MESSAGE") {
+                cime.emit(ChatEvent(
+                    cime.getID(),
+                    cimeMessage.content ?: return,
+                    cimeMessage.sender ?: return
+                ))
+            }
+
+            if (cimeMessage.type=="EVENT") {
+                when(cimeMessage.eventName) {
+                    EventName.DONATION_CHAT -> {}
+                    EventName.DONATION_MISSION_REWARD_ADDED -> {}
+                    EventName.MIDROLL_START -> {}
+                    EventName.DONATION_MISSION_UPDATED -> {}
+                    null, EventName.EMPTY -> {}
+                }
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }

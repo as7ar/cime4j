@@ -3,10 +3,13 @@ package kr.astar.cime4j
 import com.google.gson.Gson
 import kr.astar.cime4j.cime.CimeChannel
 import kr.astar.cime4j.data.channel.LiveInfo
+import kr.astar.cime4j.event.CimeEvent
 import kr.astar.cime4j.utils.CimeUtils
 import kr.astar.cime4j.utils.CimeUtils.getRequest
 import kr.astar.cime4j.websocket.CimeWebsocket
 import java.net.URI
+import java.util.function.Consumer
+import kotlin.collections.mutableListOf
 
 class Cime(private val builder: CimeBuilder) {
 
@@ -36,13 +39,30 @@ class Cime(private val builder: CimeBuilder) {
 
     private var  id: String = this.builder.id ?: error("")
     private var debug: Boolean = this.builder.debug
-
     init {
         CimeWebsocket(this)
     }
 
     fun getID() = this.id
+
     fun getAuth() = this.builder.auth
+
+    @PublishedApi
+    internal val handlerMap: MutableMap<Class<out CimeEvent>, MutableList<(CimeEvent) -> Unit>> = mutableMapOf()
+
+    inline fun <reified T : CimeEvent> on(noinline action: (T) -> Unit) {
+        val clazz = T::class.java
+        val list = handlerMap.getOrPut(clazz) { mutableListOf() }
+
+        list.add { event ->
+            action(event as T)
+        }
+    }
+
+    inline fun <reified T : CimeEvent> emit(obj: T) {
+        val clazz = T::class.java
+        handlerMap[clazz]?.forEach { it(obj) }
+    }
 
     fun fetchChatMode() {
         val uri = URI.create("https://ci.me/api/app/channels/${this.id}/chat-mode")
