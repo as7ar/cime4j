@@ -2,7 +2,6 @@ package kr.astar.cime4j.websocket
 
 import com.google.gson.Gson
 import kr.astar.cime4j.Cime
-import kr.astar.cime4j.enums.DonationType
 import kr.astar.cime4j.enums.EventName
 import kr.astar.cime4j.event.ChatEvent
 import kr.astar.cime4j.event.ConnectionEvent
@@ -61,6 +60,7 @@ class CimeWebsocket : WebSocketListener {
             }
 
             if (cimeMessage.type=="EVENT") {
+                //TODO: Donation Event
                 when(cimeMessage.eventName) {
                     EventName.DONATION_CHAT -> {}
                     EventName.DONATION_MISSION_REWARD_ADDED -> {}

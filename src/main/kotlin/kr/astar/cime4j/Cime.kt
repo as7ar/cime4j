@@ -8,8 +8,6 @@ import kr.astar.cime4j.utils.CimeUtils
 import kr.astar.cime4j.utils.CimeUtils.getRequest
 import kr.astar.cime4j.websocket.CimeWebsocket
 import java.net.URI
-import java.util.function.Consumer
-import kotlin.collections.mutableListOf
 
 class Cime(private val builder: CimeBuilder) {
 

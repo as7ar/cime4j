@@ -54,7 +54,7 @@ object CimeUtils {
             if (response.statusCode() == 200) {
                 val body = response?.body() ?: return null
 
-                println(body)
+//                println(body)
 
                 val json = Gson().fromJson(body, JsonObject::class.java)
                 val data = json.get("data")?.asJsonObject ?: json
