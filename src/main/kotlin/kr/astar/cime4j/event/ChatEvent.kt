@@ -5,6 +5,7 @@ import kr.astar.cime4j.data.message.User
 class ChatEvent(
     val channel: String,
     val content: String,
+    val userName: String,
     val sender: User
 ): CimeEvent() {
     override val eventName: String

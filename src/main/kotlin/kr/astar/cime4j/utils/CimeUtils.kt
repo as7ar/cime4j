@@ -108,22 +108,21 @@ object CimeUtils {
             val sendTime = json.get("SendTime")?.asString ?: ""
 
             var user: User? = null
-            json.getAsJsonObject("Sender")?.let { sender ->
-                val userId = sender.get("UserId")?.asString?.toIntOrNull()
 
-                val userAttrStr = sender
+            json.getAsJsonObject("Sender")?.let { sender ->
+
+                val userId = sender.get("UserId")?.asString?.toIntOrNull() ?: return@let
+
+                val userJsonString = sender
                     .getAsJsonObject("Attributes")
                     ?.get("user")
-                    ?.asString
+                    ?.asString ?: return@let
 
-                val userAttr = userAttrStr?.let {
-                    try { gson.fromJson(it, UserAttributes::class.java) }
-                    catch (_: Exception) { null }
-                }
+                val userAttributes = runCatching {
+                    gson.fromJson(userJsonString, UserAttributes::class.java)
+                }.getOrNull() ?: return@let
 
-                if (userId != null && userAttr != null) {
-                    user = User(userId, userAttr)
-                }
+                user = User(userId, userAttributes)
             }
 
             return CimeMessage(
