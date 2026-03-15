@@ -1,7 +1,6 @@
-package kr.astar.cime4j.data
+package kr.astar.cime4j.data.message
 
-import kr.astar.cime4j.data.attributes.MessageAttributes
-import java.util.UUID
+import java.util.*
 
 data class CimeMessage(
     val type: String, // EVENT, MESSAGE

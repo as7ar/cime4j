@@ -1,4 +1,5 @@
 package kr.astar.cime4j.event
 
-open class CimeEvent {
+abstract class CimeEvent {
+    abstract val eventName: String
 }

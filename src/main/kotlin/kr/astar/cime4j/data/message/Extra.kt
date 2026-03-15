@@ -1,4 +1,4 @@
-package kr.astar.cime4j.data
+package kr.astar.cime4j.data.message
 
 data class Extra(
     val dId: String,
