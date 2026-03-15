@@ -1,12 +1,13 @@
 package kr.astar.cime4j.data.message
 
+import kr.astar.cime4j.enums.EventName
 import java.util.*
 
 data class CimeMessage(
     val type: String, // EVENT, MESSAGE
     val id: String,
     val requestId: UUID,
-    val eventName: String?, // DONATION_CHAT, DONATION_MISSION_REWARD_ADDED, MIDROLL_START
+    val eventName: EventName?, // DONATION_CHAT, DONATION_MISSION_REWARD_ADDED, MIDROLL_START, DONATION_MISSION_UPDATED
 
     val attributes: MessageAttributes,
 

@@ -5,6 +5,7 @@ import com.google.gson.JsonObject
 import kr.astar.cime4j.Cime
 import kr.astar.cime4j.auth.Auth
 import kr.astar.cime4j.data.message.*
+import kr.astar.cime4j.enums.EventName
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
@@ -129,7 +130,7 @@ object CimeUtils {
                 type,
                 id,
                 requestID,
-                eventName,
+                EventName.valueOf(eventName ?: "EMPTY"),
                 messageAttributes,
                 content,
                 sendTime,
