@@ -31,6 +31,9 @@ val cime = CimeBuilder()
     .setAuth(CimeCookie("cookie_value")) // 스트리머 정보 조회시 필요 
     .build()
 
+val isActive = Cime.isActive("streamer_id")
+val channel = Cime.fetchChannel("streamer_id")
+
 cime.on<ChatEvent> { it->
     println("${it.userName}: ${it.content}")
 }
