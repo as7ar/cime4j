@@ -8,7 +8,7 @@
 
 ## 🗃️ import the library
 
-```groovy
+```gradle
 repositories {
     maven { url = uri("https://jitpack.io") }
 }
