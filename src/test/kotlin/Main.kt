@@ -13,7 +13,7 @@ fun main() {
         .build()
 
     cime.on<ChatEvent> {
-//        println("${it.sender.attributes.ch.na}:: ${it.content}")
+    //        println("${it.sender.attributes.ch.na}:: ${it.content}")
     }
 
 //    println("viewer: ${cime.fetchLiveInfo()?.viewerCount}")
