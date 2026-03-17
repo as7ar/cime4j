@@ -2,11 +2,13 @@
 ![](/images/cime4j_banner.png)
 
 [![](https://jitpack.io/v/as7ar/cime4j.svg)](https://jitpack.io/#as7ar/cime4j)
+![GitHub License](https://img.shields.io/github/license/as7ar/cime4j?style=flat-square)
+![GitHub Release](https://img.shields.io/github/v/release/as7ar/cime4j?display_name=release&style=flat-square)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/as7ar/cime4j)
 
 ## 🗃️ import the library
 
-```groovy
+```gradle
 repositories {
     maven { url = uri("https://jitpack.io") }
 }
