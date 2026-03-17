@@ -2,6 +2,7 @@ package kr.astar.cime4j
 
 import com.google.gson.Gson
 import kr.astar.cime4j.cime.CimeChannel
+import kr.astar.cime4j.data.channel.ChatMode
 import kr.astar.cime4j.data.channel.LiveInfo
 import kr.astar.cime4j.event.CimeEvent
 import kr.astar.cime4j.utils.CimeUtils
@@ -62,9 +63,11 @@ class Cime(private val builder: CimeBuilder) {
         handlerMap[clazz]?.forEach { it(obj) }
     }
 
-    fun fetchChatMode() {
+    fun fetchChatMode(): ChatMode? {
         val uri = URI.create("https://ci.me/api/app/channels/${this.id}/chat-mode")
         val response = uri.getRequest(getAuth())
+
+        return Gson().fromJson(response, ChatMode::class.java)
     }
 
     fun fetchLiveInfo(): LiveInfo? {

@@ -38,3 +38,9 @@ cime.on<ChatEvent> { it->
     println("${it.userName}: ${it.content}")
 }
 ```
+
+# 🔨 Tech Stack
+
+| Component | Link                                          | Content        | Status |
+|-----------|-----------------------------------------------|----------------|--------|
+| chzzk4j   | [Link](https://github.com/R2turnTrue/chzzk4j) | Event Listener | ✅      |
