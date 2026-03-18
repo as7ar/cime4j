@@ -1,0 +1,10 @@
+package io.github.astar.cime4j.enums
+
+enum class EventName {
+    DONATION_CHAT,
+    SUBSCRIPTION_MESSAGE,
+    DONATION_MISSION_REWARD_ADDED,
+    DONATION_MISSION_UPDATED,
+    MIDROLL_START,
+    EMPTY
+}

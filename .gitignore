@@ -40,3 +40,7 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+.env
+publish.properties
+.gradle/secrets/secring.gpg

@@ -1,0 +1,11 @@
+package io.github.astar.cime4j.event
+
+import io.github.astar.cime4j.data.message.User
+
+class DonationEvent(
+    val sender: User,
+    val amount: Long
+): CimeEvent() {
+    override val eventName: String
+        get() = "CimeDonationEvent"
+}

@@ -44,6 +44,6 @@ cime.on<ChatEvent> { it->
 
 # 🔨 Tech Stack
 
-| Component | Link                                          | Content        | Status |
-|-----------|-----------------------------------------------|----------------|--------|
-| chzzk4j   | [Link](https://github.com/R2turnTrue/chzzk4j) | Event Listener | ✅      |
+| Component | Link                                          | Content             | Status |
+|-----------|-----------------------------------------------|---------------------|--------|
+| chzzk4j   | [Link](https://github.com/R2turnTrue/chzzk4j) | Event Listener      | ✅      |
