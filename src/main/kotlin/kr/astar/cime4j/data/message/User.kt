@@ -1,6 +1,8 @@
 package kr.astar.cime4j.data.message
 
+import com.google.gson.annotations.SerializedName
+
 data class User(
-    val userID: Int,
+    @SerializedName("userID") val id: Int,
     val attributes: UserAttributes
 )

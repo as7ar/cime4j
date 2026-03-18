@@ -54,7 +54,7 @@ class CimeWebsocket : WebSocketListener {
                 cime.emit(ChatEvent(
                     cime.getID(),
                     cimeMessage.content ?: return,
-                    cimeMessage.sender?.attributes?.ch?.na ?: return,
+                    cimeMessage.sender?.attributes?.channel?.name ?: return,
                     cimeMessage.sender
                 ))
             }
