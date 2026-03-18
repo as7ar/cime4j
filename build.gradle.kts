@@ -57,3 +57,42 @@ nexusPublishing {
         }
     }
 }
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            artifactId = "cime4j"
+            groupId = "io.github.astar"
+            version = "1.0-a2"
+
+            from(components["java"])
+
+            pom {
+                name.set("cime4j")
+                description.set("cime unofficial api for java/kotlin")
+                url.set("https://github.com/as7ar/cime4j")
+
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://opensource.org/license/mit/")
+                    }
+                }
+
+                developers {
+                    developer {
+                        id.set("as7ar")
+                        name.set("ASTAR")
+                        url.set("https://github.com/as7ar")
+                    }
+                }
+
+                scm {
+                    url.set("https://github.com/as7ar/cime4j")
+                    connection.set("scm:git:https://github.com/as7ar/cime4j")
+                    developerConnection.set("scm:git:https://github.com/as7ar/cime4j")
+                }
+            }
+        }
+    }
+}
