@@ -1,13 +1,11 @@
-# 씨미 비공식 API
+# 씨미 비공식 Java JDK
 ![](/images/cime4j_banner.png)
 
 [![](https://jitpack.io/v/as7ar/cime4j.svg)](https://jitpack.io/#as7ar/cime4j)
 [![Kotlin](https://img.shields.io/badge/kotlin-2.3.0-blue.svg?logo=kotlin)](http://kotlinlang.org)
 ![GitHub License](https://img.shields.io/github/license/as7ar/cime4j?style=flat-square)
-![GitHub Release](https://img.shields.io/github/v/release/as7ar/cime4j?display_name=release&style=flat-square)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/as7ar/cime4j)
 
-## 🗃️ import the library
+## 🗃️ Import the library
 
 ```gradle
 repositories {

@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import io.github.astar.cime4j.Cime
 import io.github.astar.cime4j.auth.Auth
+import io.github.astar.cime4j.auth.AuthType
 import io.github.astar.cime4j.data.message.*
 import io.github.astar.cime4j.enums.EventName
 import io.github.astar.cime4j.exception.MustBeAuthWithCookie
@@ -34,7 +35,7 @@ object CimeUtils {
             .uri(this).GET()
             .setHeader("Accept", "application/json, text/plain, */*")
 
-        if (auth?.type=="cookie") request.setHeader("Cookie", auth.getAuth())
+        if (auth?.type== AuthType.COOKIE) request.setHeader("Cookie", auth.getAuth())
 
         return request(request.build())
     }

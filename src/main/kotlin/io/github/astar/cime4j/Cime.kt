@@ -1,6 +1,7 @@
 package io.github.astar.cime4j
 
 import com.google.gson.Gson
+import io.github.astar.cime4j.api.CimeAPI
 import io.github.astar.cime4j.cime.CimeChannel
 import io.github.astar.cime4j.data.channel.ChatMode
 import io.github.astar.cime4j.data.channel.LiveInfo
@@ -8,9 +9,7 @@ import io.github.astar.cime4j.data.mission.Mission
 import io.github.astar.cime4j.data.mission.Missions
 import io.github.astar.cime4j.event.CimeEvent
 import io.github.astar.cime4j.utils.CimeUtils
-import io.github.astar.cime4j.utils.CimeUtils.getRequest
 import io.github.astar.cime4j.websocket.CimeWebsocket
-import java.net.URI
 
 class Cime(private val builder: CimeBuilder) {
     private val gson = Gson()
@@ -57,41 +56,21 @@ class Cime(private val builder: CimeBuilder) {
         handlerMap[clazz]?.forEach { it(obj) }
     }
 
-    fun fetchChatMode(): ChatMode? {
-        return runCatching {
-            val uri = URI.create("https://ci.me/api/app/channels/${this.id}/chat-mode")
-            val response = uri.getRequest(getAuth())
+    private val api = CimeAPI(this.id, getAuth())
 
-            gson.fromJson(response, ChatMode::class.java)
-        }.getOrNull()
+    fun fetchChatMode(): ChatMode? {
+        return api.fetchChatMode(this.id)
     }
 
     fun fetchLiveInfo(): LiveInfo? {
-        return runCatching {
-            val uri = URI.create("https://ci.me/api/app/channels/${this.id}/live/viewer?isWatchingUhd=false")
-            val response = uri.getRequest(getAuth()) ?: return null
-
-//            println(response)
-
-            gson.fromJson(response, LiveInfo::class.java)
-        }.getOrNull()
+        return api.fetchLiveInfo(this.id)
     }
 
     fun fetchActiveMission(): Missions? {
-        return runCatching {
-            val uri = URI.create("https://ci.me/api/app/channels/$id/active-missions")
-            val response = uri.getRequest(getAuth())
-
-            gson.fromJson(response, Missions::class.java)
-        }.getOrNull()
+        return api.fetchActiveMission(this.id)
     }
 
     fun fetchMission(missionId: Int): Mission? {
-        return runCatching {
-            val uri = URI.create("https://ci.me/api/app/channels/$id/missions/$missionId")
-            val response = uri.getRequest(getAuth())
-
-            gson.fromJson(response, Mission::class.java)
-        }.getOrNull()
+        return api.fetchMission(this.id, missionId)
     }
 }

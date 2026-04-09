@@ -14,6 +14,7 @@ class CimeBuilder {
     fun setDebug(enable: Boolean) = apply { this.debug = enable }
 
     fun build(): Cime {
+        require(id != null) { "streamerID is required" }
         return Cime(this)
     }
 }

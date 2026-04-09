@@ -5,19 +5,17 @@ import io.github.astar.cime4j.event.ChatEvent
 
 
 fun main() {
-    println("isOnline ${Cime.isActive("irocloud")}")
+    val streamerid=""
+    val cookie= $$""
+    println("isOnline ${Cime.isActive(streamerid)}")
 
-    val cime= CimeBuilder().setID("irocloud")
-        .setAuth(
-            CimeCookie(
-                $$""
-            )
-        )
+    val cime = CimeBuilder().setID(streamerid)
+        .setAuth(CimeCookie(cookie))
         .build()
 
     cime.on<ChatEvent> {
-    //        println("${it.sender.attributes.ch.na}:: ${it.content}")
+        println("${it.sender.attributes.channel.name}:: ${it.content}")
     }
 
-//    println("viewer: ${cime.fetchLiveInfo()?.viewerCount}")
+    println("viewer: ${cime.fetchLiveInfo()?.viewerCount}")
 }

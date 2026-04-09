@@ -5,6 +5,7 @@ import io.github.astar.cime4j.Cime
 import io.github.astar.cime4j.enums.EventName
 import io.github.astar.cime4j.event.ChatEvent
 import io.github.astar.cime4j.event.ConnectionEvent
+import io.github.astar.cime4j.utils.CimeEndpoints
 import io.github.astar.cime4j.utils.CimeUtils.generateMessage
 import io.github.astar.cime4j.utils.CimeUtils.generateToken
 import okhttp3.*
@@ -32,7 +33,7 @@ class CimeWebsocket : WebSocketListener {
 
     private fun connect() {
         val request = Request.Builder()
-            .url("wss://edge.ivschat.ap-northeast-2.amazonaws.com/")
+            .url(CimeEndpoints.WEBSOCKET_URL)
             .header("Sec-WebSocket-Protocol",
                 this.cime.generateToken(this.cime.getID())/*.also {
                     println("Token Generated: ${it}")
