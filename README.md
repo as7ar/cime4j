@@ -45,3 +45,6 @@ cime.on<ChatEvent> { it->
 | Component | Link                                          | Content             | Status |
 |-----------|-----------------------------------------------|---------------------|--------|
 | chzzk4j   | [Link](https://github.com/R2turnTrue/chzzk4j) | Event Listener      | ✅      |
+
+# 👤Support Discord Server
+https://discord.gg/BCqWwvr888
