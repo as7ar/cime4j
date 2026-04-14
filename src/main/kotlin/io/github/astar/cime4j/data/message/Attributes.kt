@@ -10,11 +10,11 @@ data class MessageAttributes(
 )
 
 /**
- * @param id 사용자 ID
- * @param channel 사용자 채널
- * @param c ???
- * @param badges 사용자 뱃지 목록
- * @param description 사용자 소개말
+ * @property id 사용자 ID
+ * @property channel 사용자 채널
+ * @property c ???
+ * @property badges 사용자 뱃지 목록
+ * @property description 사용자 소개말
  * */
 data class UserAttributes(
     val id: String,

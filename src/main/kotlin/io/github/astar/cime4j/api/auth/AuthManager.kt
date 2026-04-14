@@ -5,10 +5,8 @@ import com.google.gson.JsonObject
 import io.github.astar.cime4j.auth.CimeApplication
 import io.github.astar.cime4j.data.api.Response
 import io.github.astar.cime4j.utils.CimeEndpoints
-import io.github.astar.cime4j.utils.CimeUtils
 import io.github.astar.cime4j.utils.CimeUtils.postRequest
 import java.net.URI
-import java.net.http.HttpRequest
 
 class AuthManager(
     val auth: CimeApplication,
