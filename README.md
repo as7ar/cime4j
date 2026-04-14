@@ -149,8 +149,8 @@ graph TD
 
     E -->I[외부 프로젝트]
     
-    G[CimeCookie(Auth)] --> A
-    H[CimeApplication(Auth)] --> A
+    G[CimeCookie] --> A
+    H[CimeApplication] --> A
 ```
 
 | Component | Link                                          | Content             | Status |
