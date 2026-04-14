@@ -17,14 +17,14 @@ import java.util.*
 object CimeUtils {
     fun Cime.generateToken(streamerID: String): String? {
         val url = URI.create("https://ci.me/api/app/channels/${streamerID}/chat-token")
-        val json = url.postRequest(this.getAuth()) ?: return null
+        val json = url.postRequest() ?: return null
         val token = json["token"].asString
         return token
     }
 
-    fun URI.postRequest(auth: Auth?): JsonObject? {
+    fun URI.postRequest(params: String?=""): JsonObject? {
         val request= HttpRequest.newBuilder()
-            .uri(this).POST(HttpRequest.BodyPublishers.ofString(""))
+            .uri(this).POST(HttpRequest.BodyPublishers.ofString(params))
             .header("Accept", "application/json, text/plain, */*").build()
 
         return request(request)
@@ -40,7 +40,7 @@ object CimeUtils {
         return request(request.build())
     }
 
-    private fun request(request: HttpRequest): JsonObject? {
+    fun request(request: HttpRequest): JsonObject? {
 
         val client = HttpClient.newHttpClient()
 

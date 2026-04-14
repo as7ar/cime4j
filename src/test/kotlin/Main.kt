@@ -10,7 +10,7 @@ fun main() {
     println("isOnline ${Cime.isActive(streamerid)}")
 
     val cime = CimeBuilder().setID(streamerid)
-        .setAuth(CimeCookie(cookie))
+        .addAuth(CimeCookie(cookie))
         .build()
 
     cime.on<ChatEvent> {

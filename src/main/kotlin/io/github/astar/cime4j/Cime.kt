@@ -2,6 +2,7 @@ package io.github.astar.cime4j
 
 import com.google.gson.Gson
 import io.github.astar.cime4j.api.CimeAPI
+import io.github.astar.cime4j.auth.AuthType
 import io.github.astar.cime4j.cime.CimeChannel
 import io.github.astar.cime4j.data.channel.ChatMode
 import io.github.astar.cime4j.data.channel.LiveInfo
@@ -37,7 +38,7 @@ class Cime(private val builder: CimeBuilder) {
 
     fun getID() = this.id
 
-    fun getAuth() = this.builder.auth
+    fun getAuth() = this.builder.authList
 
     @PublishedApi
     internal val handlerMap: MutableMap<Class<out CimeEvent>, MutableList<(CimeEvent) -> Unit>> = mutableMapOf()
@@ -56,7 +57,7 @@ class Cime(private val builder: CimeBuilder) {
         handlerMap[clazz]?.forEach { it(obj) }
     }
 
-    private val api = CimeAPI(this.id, getAuth())
+    private val api = CimeAPI(this.id, getAuth().find { it.type== AuthType.COOKIE })
 
     fun fetchChatMode(): ChatMode? {
         return api.fetchChatMode(this.id)
