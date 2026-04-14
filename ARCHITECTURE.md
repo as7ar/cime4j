@@ -2,61 +2,29 @@
 
 ```mermaid
 graph TD
-    %% ========== External ==========
-    subgraph External
-        User[("Developer")]
-        CiMePlatform[("ci.me Platform")]
-        CiMeWebSocket[("ci.me WebSocket")]
-        CiMeAPI[("ci.me REST API")]
-    end
 
-    %% ========== Core ==========
-    subgraph Core["cime4j Core"]
-        CimeBuilder -->|builds| Cime
-        Cime -->|initializes| CimeWebsocket
-        Cime -->|initializes| CimeAPI
-        Cime -->|stores| HandlerMap[(handlerMap)]
-    end
+    %% User flow
+    User --> CimeBuilder
+    CimeBuilder --> Cime
 
-    %% ========== Auth ==========
-    subgraph Auth["Authentication"]
-        CimeBuilder -->|addAuth| AuthList[("authList: List<Auth>")]
-        AuthList --> CimeCookie
-        AuthList --> CimeToken
-        AuthList --> CimeApplication
-    end
+    %% Core
+    Cime --> CimeWebsocket
+    Cime --> CimeAPI
+    Cime --> HandlerMap
 
-    %% ========== Networking ==========
-    subgraph Networking["Networking Layer"]
-        CimeWebsocket -->|connects to| CiMeWebSocket
-        CimeAPI -->|calls| CiMeAPI
-        CimeUtils -->|fetches JSON| CiMeAPI
-    end
+    %% Networking
+    CimeWebsocket -->|connect| CiMeWebSocket
+    CimeAPI -->|request| CiMeAPI
 
-    %% ========== Events ==========
-    subgraph Events["Event System"]
-        CiMeWebSocket -->|raw JSON| CimeWebsocket
-        CimeWebsocket -->|parses| CimeMessage
-        CimeMessage -->|routes to| Cime
-        Cime -->|emits| ChatEvent
-        Cime -->|emits| DonationEvent
-        Cime -->|emits| MissionEvent
-        HandlerMap -->|triggers| UserLogic[("User Callback")]
-    end
+    %% Event flow
+    CiMeWebSocket -->|message| CimeWebsocket
+    CimeWebsocket -->|parse| CimeMessage
+    CimeMessage -->|dispatch| Cime
+    Cime -->|emit| Event
+    Event -->|handle| HandlerMap
 
-    %% ========== Data Models ==========
-    subgraph Models["Data Models"]
-        CimeAPI -->|returns| LiveInfo
-        CimeAPI -->|returns| ChatMode
-        CimeAPI -->|returns| Mission
-        CimeAPI -->|returns| Missions
-        CimeUtils -->|returns| CimeChannel
-    end
-
-    %% ========== User Flow ==========
-    User -->|configures| CimeBuilder
-    User -->|listens to| UserLogic
-    UserLogic -->|uses| Cime
+    %% Data
+    CimeAPI --> Models
 ```
 
 ### class
