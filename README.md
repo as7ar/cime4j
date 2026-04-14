@@ -146,6 +146,7 @@ graph TD
     B --> D[CimeAPI]
     C --> E[Event Dispatch]
     D --> F[REST API Calls]
+    F --> E
 
     E -->I[외부 프로젝트]
     
