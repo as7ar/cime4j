@@ -149,9 +149,11 @@ graph TD
     F --> E
 
     E -->I[외부 프로젝트]
+
+    J[Auth] --> A
     
-    G[CimeCookie] --> A
-    H[CimeApplication] --> A
+    G[CimeCookie] --> J
+    H[CimeApplication] --> J
 ```
 
 | Component | Link                                          | Content             | Status |
