@@ -137,28 +137,12 @@ cime.on<ChatEvent> { event ->
 
 # 🔨 Tech Stack
 
-## 🏗️ 아키텍처
-
-```mermaid
-graph TD
-    A[CimeBuilder] --> B[Cime]
-    B --> C[CimeWebsocket]
-    B --> D[CimeAPI]
-    C --> E[Event Dispatch]
-    D --> F[REST API Calls]
-    F --> E
-
-    E -->I[외부 프로젝트]
-
-    J[Auth] --> A
-    
-    G[CimeCookie] --> J
-    H[CimeApplication] --> J
-```
-
 | Component | Link                                          | Content             | Status |
 |-----------|-----------------------------------------------|---------------------|--------|
 | chzzk4j   | [Link](https://github.com/R2turnTrue/chzzk4j) | Event Listener      | ✅      |
+
+## Architecture
+[아키텍처](./ARCHITECTURE.md)
 
 # 👤Support Discord Server
 https://discord.gg/BCqWwvr888
