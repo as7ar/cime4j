@@ -3,6 +3,7 @@ package io.github.astar.cime4j
 import com.google.gson.Gson
 import io.github.astar.cime4j.api.CimeAPI
 import io.github.astar.cime4j.auth.AuthType
+import io.github.astar.cime4j.auth.CimeApplication
 import io.github.astar.cime4j.cime.CimeChannel
 import io.github.astar.cime4j.data.channel.ChatMode
 import io.github.astar.cime4j.data.channel.LiveInfo
@@ -42,8 +43,12 @@ class Cime(private val builder: CimeBuilder) {
 
     private var  id: String = this.builder.id ?: error("")
     private var debug: Boolean = this.builder.debug
+
+    var application: CimeApplication?=null
+
     init {
         CimeWebsocket(this)
+        this.application= builder.authList.find { it.type== AuthType.APPLICATION } as? CimeApplication
     }
 
     /**

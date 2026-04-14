@@ -30,7 +30,7 @@ object CimeUtils {
         return request(request)
     }
 
-    fun URI.getRequest(auth: Auth?): JsonObject? {
+    fun URI.getRequest(auth: Auth?=null): JsonObject? {
         val request= HttpRequest.newBuilder()
             .uri(this).GET()
             .setHeader("Accept", "application/json, text/plain, */*")
@@ -130,14 +130,10 @@ object CimeUtils {
             }
 
             return CimeMessage(
-                type,
-                id,
-                requestID,
+                type, id, requestID,
                 EventName.valueOf(eventName ?: "EMPTY"),
-                messageAttributes,
-                content,
-                sendTime,
-                user
+                messageAttributes, content,
+                sendTime, user
             )
         } catch (e: Exception) {
             e.printStackTrace()
@@ -153,5 +149,14 @@ object CimeUtils {
             .build()
 
         return request(request)
+    }
+
+    fun execute(
+        isOpenAPI:Boolean,
+        legacy: ()-> Unit,
+        openapi: ()-> Unit
+    ) {
+        if (isOpenAPI) openapi()
+        else legacy()
     }
 }
