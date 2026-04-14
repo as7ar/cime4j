@@ -4,6 +4,7 @@
 [![](https://jitpack.io/v/as7ar/cime4j.svg)](https://jitpack.io/#as7ar/cime4j)
 [![Kotlin](https://img.shields.io/badge/kotlin-2.3.0-blue.svg?logo=kotlin)](http://kotlinlang.org)
 ![GitHub License](https://img.shields.io/github/license/as7ar/cime4j?style=flat-square)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/as7ar/cime4j)
 
 ## 🗃️ Import the library
 
