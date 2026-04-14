@@ -146,9 +146,11 @@ graph TD
     B --> D[CimeAPI]
     C --> E[Event Dispatch]
     D --> F[REST API Calls]
+
+    E -->I[외부 프로젝트]
     
-    G[CimeCookie] --> B
-    H[CimeApplication] --> B
+    G[CimeCookie(Auth)] --> A
+    H[CimeApplication(Auth)] --> A
 ```
 
 | Component | Link                                          | Content             | Status |
