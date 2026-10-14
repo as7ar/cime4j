@@ -1,5 +1,3 @@
-import java.util.Properties
-
 plugins {
     id("java")
     kotlin("jvm") version "2.4.21"
@@ -40,7 +38,7 @@ publishing {
         create<MavenPublication>("mavenJava") {
             artifactId = "cime4j"
             groupId = "io.github.astar"
-            version = "1.0-a2"
+            version = rootProject.version.toString()
 
             from(components["java"])
 

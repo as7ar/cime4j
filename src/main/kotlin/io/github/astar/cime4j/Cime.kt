@@ -10,7 +10,7 @@ import io.github.astar.cime4j.data.legacy.channel.ChatMode
 import io.github.astar.cime4j.data.legacy.channel.LiveInfo
 import io.github.astar.cime4j.data.mission.Mission
 import io.github.astar.cime4j.data.mission.Missions
-import io.github.astar.cime4j.event.CimeEvent
+import io.github.astar.cime4j.events.CimeEvent
 import io.github.astar.cime4j.utils.CimeUtils
 import io.github.astar.cime4j.websocket.CimeWebsocket
 

@@ -3,7 +3,7 @@ package io.github.astar.cime4j.data.api
 import com.google.gson.JsonArray
 import io.github.astar.cime4j.data.api.profile.CimeProfile
 
-data class CimeEvent(
+data class CimeEventData(
     var event: String,
     var data: String,
 )

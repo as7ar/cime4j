@@ -3,15 +3,12 @@ package io.github.astar.cime4j.websocket
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import io.github.astar.cime4j.Cime
-import io.github.astar.cime4j.data.api.CimeEvent
-import io.github.astar.cime4j.enums.EventName
-import io.github.astar.cime4j.event.CimeEventHandler
-import io.github.astar.cime4j.event.ConnectionEvent
-import io.github.astar.cime4j.event.DisconnectEvent
-import io.github.astar.cime4j.event.legacy.ChatEvent
+import io.github.astar.cime4j.data.api.CimeEventData
+import io.github.astar.cime4j.events.CimeEventHandler
+import io.github.astar.cime4j.events.ConnectionEvent
+import io.github.astar.cime4j.events.DisconnectEvent
 import io.github.astar.cime4j.utils.CimeEndpoints
 import io.github.astar.cime4j.utils.CimeUtils
-import io.github.astar.cime4j.utils.CimeUtils.generateMessage
 import io.github.astar.cime4j.utils.CimeUtils.generateToken
 import io.github.astar.cime4j.utils.CimeUtils.getRequest
 import io.github.astar.cime4j.utils.CimeUtils.postRequest
@@ -106,41 +103,14 @@ class CimeWebsocket : WebSocketListener {
         if (text=="{\"action\":\"PONG\"}") return
 
         try {
-            if (isOpenAPI) {
-                onMessageOpenAPI(webSocket, text)
-            } else onMessageLegacy(text)
+            if (isOpenAPI) onMessageOpenAPI(webSocket, text)
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    fun onMessageLegacy(text: String) {
-        val cimeMessage = generateMessage(text) ?: return
-
-        if (cimeMessage.type =="MESSAGE") {
-            cime.emit(ChatEvent(
-                cime.getID(),
-                cimeMessage.content ?: return,
-                cimeMessage.sender?.attributes?.channel?.name ?: return,
-                cimeMessage.sender
-            ))
-        }
-
-        if (cimeMessage.type=="EVENT") {
-            //TODO: Donation Event
-            when(cimeMessage.eventName) {
-                EventName.DONATION_CHAT -> {}
-                EventName.DONATION_MISSION_REWARD_ADDED -> {}
-                EventName.MIDROLL_START -> {}
-                EventName.DONATION_MISSION_UPDATED -> {}
-                EventName.SUBSCRIPTION_MESSAGE -> {}
-                null, EventName.EMPTY -> {}
-            }
-        }
-    }
-
     fun onMessageOpenAPI(webSocket: WebSocket, text: String) {
-        val message = gson.fromJson(text, CimeEvent::class.java)
+        val message = gson.fromJson(text, CimeEventData::class.java)
         val channelId = Cime.fetchChannel(cime.getID())?.id ?: 0
         val handler = CimeEventHandler(cime, channelId)
 
@@ -148,7 +118,6 @@ class CimeWebsocket : WebSocketListener {
             "CHAT" -> handler.onChat(text)
             "DONATION" -> handler.onDonation(text)
             "SUBSCRIPTION" -> handler.onSub(text)
-
             else -> return
         }
     }

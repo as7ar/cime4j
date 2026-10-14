@@ -1,4 +1,4 @@
-package io.github.astar.cime4j.event
+package io.github.astar.cime4j.events
 
 class ConnectionEvent(
     val channelId: String

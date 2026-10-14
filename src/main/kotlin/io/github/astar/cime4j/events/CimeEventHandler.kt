@@ -1,4 +1,4 @@
-package io.github.astar.cime4j.event
+package io.github.astar.cime4j.events
 
 import com.google.gson.Gson
 import io.github.astar.cime4j.Cime
@@ -15,18 +15,18 @@ internal class CimeEventHandler(
     fun onChat(text: String) {
         val response = gson.fromJson(text, CimeChat::class.java)
         if (response.channelId.toIntOrNull() != channelId) return
-
+        cime.emit(ChatEvent(response))
     }
 
     fun onDonation(text: String) {
         val response = gson.fromJson(text, CimeDonation::class.java)
         if (response.channelId.toIntOrNull() != channelId) return
-
+        cime.emit(DonationEvent(response))
     }
 
     fun onSub(text: String) {
         val response = gson.fromJson(text, CimeSubscription::class.java)
         if (response.channelId.toIntOrNull() != channelId) return
-
+        cime.emit(SubscriptionEvent(response))
     }
 }

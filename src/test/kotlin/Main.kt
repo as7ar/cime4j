@@ -1,12 +1,12 @@
 import io.github.astar.cime4j.Cime
 import io.github.astar.cime4j.CimeBuilder
 import io.github.astar.cime4j.auth.type.CimeApplication
-import io.github.astar.cime4j.event.legacy.ChatEvent
-import java.util.Scanner
+import io.github.astar.cime4j.events.ChatEvent
+import java.util.*
 
 
 fun main() {
-    val streamerid="asxar"
+    val streamerid="jeokgeukjeoki_przvq4"
     val application = CimeApplication(
         "",
         "",
@@ -26,7 +26,7 @@ fun main() {
     println(access?.accessToken)
 
     cime.on<ChatEvent> {
-        println("${it.sender.attributes.channel.name}:: ${it.content}")
+        println("${it.chat.profile.name}:: ${it.chat.content}")
     }
 
     println("viewer: ${cime.fetchLiveInfo()?.viewerCount}")

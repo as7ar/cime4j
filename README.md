@@ -25,7 +25,7 @@ dependencies {
 import io.github.astar.cime4j.Cime
 import io.github.astar.cime4j.CimeBuilder
 import io.github.astar.cime4j.auth.CimeCookie
-import io.github.astar.cime4j.event.ChatEvent
+import io.github.astar.cime4j.events.ChatEvent
 
 // Cime 인스턴스 생성
 val cime = CimeBuilder()
@@ -115,7 +115,7 @@ val accessToken = authManager.accessTokenGenerator(
 ### 연결 이벤트
 
 ```kotlin
-import io.github.astar.cime4j.event.ConnectionEvent
+import io.github.astar.cime4j.events.ConnectionEvent
 
 cime.on<ConnectionEvent> { event ->
     println("WebSocket 연결됨: ${event.streamerId}")
