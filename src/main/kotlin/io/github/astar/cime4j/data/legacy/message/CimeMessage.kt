@@ -1,8 +1,9 @@
-package io.github.astar.cime4j.data.message
+package io.github.astar.cime4j.data.legacy.message
 
 import io.github.astar.cime4j.enums.EventName
 import java.util.*
 
+@Deprecated(message = "Use Official API")
 data class CimeMessage(
     val type: String, // EVENT, MESSAGE
     val id: String,

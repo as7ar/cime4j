@@ -3,8 +3,8 @@ package io.github.astar.cime4j.api
 import com.google.gson.Gson
 import io.github.astar.cime4j.auth.Auth
 import io.github.astar.cime4j.auth.AuthType
-import io.github.astar.cime4j.data.channel.ChatMode
-import io.github.astar.cime4j.data.channel.LiveInfo
+import io.github.astar.cime4j.data.legacy.channel.ChatMode
+import io.github.astar.cime4j.data.legacy.channel.LiveInfo
 import io.github.astar.cime4j.data.mission.Mission
 import io.github.astar.cime4j.data.mission.Missions
 import io.github.astar.cime4j.utils.CimeEndpoints

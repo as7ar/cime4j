@@ -1,4 +1,4 @@
-package io.github.astar.cime4j.data.channel
+package io.github.astar.cime4j.data.legacy.channel
 
 /**
  * @property emojiMode 이모지 전용 채팅 모드 여부

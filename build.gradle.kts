@@ -2,14 +2,14 @@ import java.util.Properties
 
 plugins {
     id("java")
-    kotlin("jvm") version "2.3.0"
+    kotlin("jvm") version "2.4.21"
     id("signing")
     id("maven-publish")
     id("io.github.gradle-nexus.publish-plugin") version "2.0.0"
 }
 
 group = "io.github.astar"
-version = "1.0-a3"
+version = "1.0-a4"
 
 repositories {
     mavenCentral()

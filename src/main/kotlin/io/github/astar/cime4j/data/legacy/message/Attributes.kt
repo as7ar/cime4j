@@ -1,7 +1,8 @@
-package io.github.astar.cime4j.data.message
+package io.github.astar.cime4j.data.legacy.message
 
 import com.google.gson.annotations.SerializedName
 
+@Deprecated(message = "Use Official API")
 data class MessageAttributes(
     val sendTimeAt: String?,
     val sid: String?,
@@ -16,6 +17,7 @@ data class MessageAttributes(
  * @property badges 사용자 뱃지 목록
  * @property description 사용자 소개말
  * */
+@Deprecated(message = "Use Official API")
 data class UserAttributes(
     val id: String,
     @SerializedName("ch") val channel: Channel,
@@ -28,6 +30,7 @@ data class UserAttributes(
  * @param id 사용자 ID
  * @param name 사용자 닉네임
  * */
+@Deprecated(message = "Use Official API")
 data class Channel(
     val id: String,
     @SerializedName("na") val name: String

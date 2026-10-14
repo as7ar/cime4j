@@ -5,7 +5,7 @@ import com.google.gson.JsonObject
 import io.github.astar.cime4j.Cime
 import io.github.astar.cime4j.auth.Auth
 import io.github.astar.cime4j.auth.AuthType
-import io.github.astar.cime4j.data.message.*
+import io.github.astar.cime4j.data.legacy.message.*
 import io.github.astar.cime4j.enums.EventName
 import io.github.astar.cime4j.exception.MustBeAuthWithCookie
 import java.net.URI

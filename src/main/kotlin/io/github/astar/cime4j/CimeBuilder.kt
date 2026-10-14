@@ -13,7 +13,7 @@ class CimeBuilder {
     fun setID(streamerID: String) = apply { this.id=streamerID }
 
     /**
-     * @param auth 인증 방식 추가 [io.github.astar.cime4j.auth.CimeCookie] 또는 [io.github.astar.cime4j.auth.CimeApplication] 사용
+     * @param auth 인증 방식 추가 [io.github.astar.cime4j.auth.type.CimeCookie] 또는 [io.github.astar.cime4j.auth.type.CimeApplication] 사용
      * */
     fun addAuth(vararg auth: Auth) = apply {
         auth.forEach { this.authList.add(it) }

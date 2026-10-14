@@ -1,8 +1,9 @@
-package io.github.astar.cime4j.api.auth
+package io.github.astar.cime4j.auth
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import io.github.astar.cime4j.auth.CimeApplication
+import io.github.astar.cime4j.auth.type.CimeApplication
+import io.github.astar.cime4j.auth.type.CimeToken
 import io.github.astar.cime4j.data.api.Response
 import io.github.astar.cime4j.utils.CimeEndpoints
 import io.github.astar.cime4j.utils.CimeUtils.postRequest
@@ -17,9 +18,8 @@ class AuthManager(
 
     val redirectURL = "https://ci.me/auth/openapi/account-interlock?clientId=${this.auth.clientId}&redirectUri=${this.auth.redirectURL}&state=state"
 
-    var accessToken: String = ""
-    var refreshToken: String = ""
-    var scope: String = ""
+    var token: CimeToken? = null
+    var scope: List<Scope> = mutableListOf()
 
     private val tokenExpiry: Long = 3600 // 1h
 
@@ -27,7 +27,7 @@ class AuthManager(
         grantType: GrantType=GrantType.AUTHORIZATION_CODE,
         code: String?=null,
         refreshToken: String?=null
-    ): String? {
+    ): CimeToken? {
         val params= JsonObject().apply {
             addProperty("grantType", grantType.name.lowercase())
             addProperty("clientId", this@AuthManager.auth.clientId)
@@ -35,9 +35,11 @@ class AuthManager(
 
             when(grantType) {
                 GrantType.AUTHORIZATION_CODE-> {
+                    require(code!=null)
                     addProperty("code", code ?: "")
                 }
                 GrantType.REFRESH_TOKEN-> {
+                    require(refreshToken!=null)
                     addProperty("refreshToken", refreshToken ?: "")
                 }
             }
@@ -52,10 +54,13 @@ class AuthManager(
             JsonObject::class.java
         )
 
-        this.refreshToken = data["refreshToken"].asString
-        this.scope = data["scope"].asString
+        this.token = CimeToken(
+            data["accessToken"].asString,
+            data["refreshToken"].asString
+        )
+        this.scope = data["scope"].asString.split(" ").map { Scope.valueOf(it) }
 
-        return data["accessToken"].asString
+        return this.token
     }
 
     fun revokeToken(
@@ -75,9 +80,31 @@ class AuthManager(
         return req!=null
     }
 
+    fun refresh(): CimeToken? = accessTokenGenerator(
+        GrantType.REFRESH_TOKEN,
+        refreshToken = this.token?.refreshToken
+    )
+
     enum class GrantType {
         AUTHORIZATION_CODE,
         REFRESH_TOKEN,
+    }
+
+    enum class Scope(val str: String) {
+        READ_CHANNEL("READ:CHANNEL"),
+        READ_LIVE_STREAM_KEY("READ:LIVE_STREAM_KEY"),
+        READ_LIVE_STREAM_SETTINGS("READ:LIVE_STREAM_SETTINGS"),
+        WRITE_LIVE_STREAM_SETTINGS("WRITE:LIVE_STREAM_SETTINGS"),
+        READ_USER("READ:USER"),
+        READ_LIVE_CHAT("READ:LIVE_CHAT"),
+        WRITE_LIVE_CHAT("WRITE:LIVE_CHAT"),
+        WRITE_LIVE_CHAT_NOTICE("WRITE:LIVE_CHAT_NOTICE"),
+        READ_LIVE_CHAT_SETTINGS("READ:LIVE_CHAT_SETTINGS"),
+        WRITE_LIVE_CHAT_SETTINGS("WRITE:LIVE_CHAT_SETTINGS"),
+        WRITE_USER_BLOCK("WRITE:USER_BLOCK"),
+        READ_USER_BLOCK("READ:USER_BLOCK"),
+        READ_DONATION("READ:DONATION"),
+        READ_SUBSCRIPTION("READ:SUBSCRIPTION"),
     }
 }
 

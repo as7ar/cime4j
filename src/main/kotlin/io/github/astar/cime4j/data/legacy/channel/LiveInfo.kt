@@ -1,4 +1,4 @@
-package io.github.astar.cime4j.data.channel
+package io.github.astar.cime4j.data.legacy.channel
 
 /**
  * @property title 방송 제목

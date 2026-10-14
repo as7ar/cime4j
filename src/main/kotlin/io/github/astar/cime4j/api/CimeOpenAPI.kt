@@ -1,8 +1,8 @@
 package io.github.astar.cime4j.api
 
-import io.github.astar.cime4j.auth.CimeApplication
-import io.github.astar.cime4j.data.channel.ChatMode
-import io.github.astar.cime4j.data.channel.LiveInfo
+import io.github.astar.cime4j.auth.type.CimeApplication
+import io.github.astar.cime4j.data.legacy.channel.ChatMode
+import io.github.astar.cime4j.data.legacy.channel.LiveInfo
 import io.github.astar.cime4j.data.mission.Mission
 import io.github.astar.cime4j.data.mission.Missions
 

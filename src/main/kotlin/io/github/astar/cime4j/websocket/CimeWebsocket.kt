@@ -3,23 +3,27 @@ package io.github.astar.cime4j.websocket
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import io.github.astar.cime4j.Cime
+import io.github.astar.cime4j.data.api.CimeEvent
 import io.github.astar.cime4j.enums.EventName
-import io.github.astar.cime4j.event.ChatEvent
+import io.github.astar.cime4j.event.CimeEventHandler
 import io.github.astar.cime4j.event.ConnectionEvent
+import io.github.astar.cime4j.event.DisconnectEvent
+import io.github.astar.cime4j.event.legacy.ChatEvent
 import io.github.astar.cime4j.utils.CimeEndpoints
 import io.github.astar.cime4j.utils.CimeUtils
 import io.github.astar.cime4j.utils.CimeUtils.generateMessage
 import io.github.astar.cime4j.utils.CimeUtils.generateToken
 import io.github.astar.cime4j.utils.CimeUtils.getRequest
+import io.github.astar.cime4j.utils.CimeUtils.postRequest
 import okhttp3.*
 import java.net.URI
 import java.net.http.HttpRequest
-import java.util.Timer
-import java.util.TimerTask
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class CimeWebsocket : WebSocketListener {
     private val cime: Cime
+
     constructor(cime: Cime) : super() {
         this.cime = cime
         this.gson = Gson()
@@ -61,6 +65,11 @@ class CimeWebsocket : WebSocketListener {
                 this.socket = this.client.newWebSocket(request, this)
             },
             {
+                listOf("chat", "donation", "subscription").forEach { event ->
+                    val uri = URI.create(CimeEndpoints.SUBSCRIBE+event)
+                    uri.postRequest()
+                }
+
                 val uri = URI.create("${CimeEndpoints.API_URL}/open/v1/sessions/auth/client")
                 HttpRequest.newBuilder()
                     .uri(uri).GET()
@@ -131,11 +140,22 @@ class CimeWebsocket : WebSocketListener {
     }
 
     fun onMessageOpenAPI(webSocket: WebSocket, text: String) {
+        val message = gson.fromJson(text, CimeEvent::class.java)
+        val channelId = Cime.fetchChannel(cime.getID())?.id ?: 0
+        val handler = CimeEventHandler(cime, channelId)
 
+        when(message.event) {
+            "CHAT" -> handler.onChat(text)
+            "DONATION" -> handler.onDonation(text)
+            "SUBSCRIPTION" -> handler.onSub(text)
+
+            else -> return
+        }
     }
 
     override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-        println("Closed: ${code}, caused: $reason")
+//        println("Closed: ${code}, caused: $reason")
+        cime.emit(DisconnectEvent(code, reason))
     }
 
     override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {

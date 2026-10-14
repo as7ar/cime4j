@@ -1,6 +1,7 @@
-package io.github.astar.cime4j.event
+package io.github.astar.cime4j.event.legacy
 
-import io.github.astar.cime4j.data.message.User
+import io.github.astar.cime4j.data.legacy.message.User
+import io.github.astar.cime4j.event.CimeEvent
 
 class ChatEvent(
     val channel: String,
