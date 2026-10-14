@@ -49,9 +49,9 @@ class Cime(private val builder: CimeBuilder) {
     var authManager: AuthManager ?= null
 
     init {
-        CimeWebsocket(this)
         this.application= builder.authList.find { it.type== AuthType.APPLICATION } as? CimeApplication
         if (application != null) authManager = AuthManager(this.application!!)
+        CimeWebsocket(this)
     }
 
     /**

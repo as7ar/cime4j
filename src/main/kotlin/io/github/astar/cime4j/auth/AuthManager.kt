@@ -58,7 +58,9 @@ class AuthManager(
             data["accessToken"].asString,
             data["refreshToken"].asString
         )
-        this.scope = data["scope"].asString.split(" ").map { Scope.valueOf(it) }
+        this.scope = data["scope"].asString
+            .split(" ")
+            .map { value -> Scope.entries.first { it.str == value } }
 
         return this.token
     }
